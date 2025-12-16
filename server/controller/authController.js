@@ -26,7 +26,6 @@ export const register = async (req,res) =>{
             password: hashedPassword
         });
         await user.save()
-
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});
 
         res.cookie('token', token, {
@@ -36,24 +35,28 @@ export const register = async (req,res) =>{
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
         //sending welcome email
-       await transporter.sendMail({
-        from: `Test <${process.env.SENDER_EMAIL}>`,
-     to: email,
-       subject: 'SMTP Test',
-       text: 'Brevo SMTP is working',
-    });
+         const mailOptions = {
+         from: `Forex ${process.env.SENDER_EMAIL}`,
+         to: email,
+         subject: 'wellcome to forex',
+         text: 'Thank you for login'
+};
 
-        return res.json({success: true});
+     transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
 
-        
+         return res.json({success: true}); 
     } catch (error) {
         
         return res.json({success: false, massage: error.message});
         
     }
 }
-
-
 export const login = async (req,res) => {
     const {email, password} = req.body;
 
