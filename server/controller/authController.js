@@ -36,14 +36,13 @@ export const register = async (req,res) =>{
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
         //sending welcome email
-        const mailOPtion = {
-            from: process.env.SENDER_EMAIL,
-            to: email,
-            subject: 'welcom to forex',
-            text: `Welcome to forex.your account has been created with email id: ${email}`
+       await transporter.sendMail({
+        from: `Test <${process.env.SENDER_EMAIL}>`,
+     to: email,
+       subject: 'SMTP Test',
+       text: 'Brevo SMTP is working',
+    });
 
-        }
-        await transporter.sendMail(mailOPtion);
         return res.json({success: true});
 
         
