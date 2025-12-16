@@ -38,8 +38,8 @@ export const register = async (req,res) =>{
          const mailOptions = {
          from: `Forex ${process.env.SENDER_EMAIL}`,
          to: email,
-         subject: 'wellcome to forex',
-         text: 'Thank you for login'
+         subject: 'Welcome to forex',
+         text: `Welcome to forex website. Your account has been created with email id: ${email}`
 };
 
      transporter.sendMail(mailOptions, function(error, info){
